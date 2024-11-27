@@ -1,15 +1,42 @@
 {
-    "title": "Scrape data from a web page",
-    "type": "object",
-    "schemaVersion": 1,
     "properties": {
+        "apiKey": {
+            "description": "Your Parsera API key",
+            "editor": "textfield",
+            "title": "Parsera API Key",
+            "type": "string"
+        },
+        "attributes": {
+            "description": "List of attributes to extract from the page",
+            "editor": "json",
+            "items": {
+                "properties": {
+                    "description": {
+                        "description": "Description of what to extract",
+                        "title": "Attribute description",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Name of the attribute",
+                        "title": "Attribute name",
+                        "type": "string"
+                    }
+                },
+                "required": ["name", "description"],
+                "type": "object"
+            },
+            "title": "Attributes to extract",
+            "type": "array"
+        },
         "url": {
-        "title": "URL of the page",
-        "type": "string",
-        "description": "The URL of website you want to get the data from.",
-        "editor": "textfield",
-        "prefill": "https://www.apify.com"
+            "description": "URL of the page to scrape",
+            "editor": "textfield",
+            "title": "URL",
+            "type": "string"
         }
     },
-    "required": ["url"]
+    "required": ["url", "apiKey", "attributes"],
+    "schemaVersion": 1,
+    "title": "Input schema for the Parsera Actor",
+    "type": "object"
 }
