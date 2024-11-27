@@ -1,5 +1,5 @@
 {
-    "name": "parsera",
+    "name": "apify-actor-parsera",
     "version": "0.0.1",
     "type": "module",
     "description": "Extract data from any webpage with AI using Parsera",
