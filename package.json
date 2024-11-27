@@ -1,0 +1,36 @@
+{
+    "name": "parsera",
+    "version": "0.0.1",
+    "type": "module",
+    "description": "Extract data from any webpage with AI using Parsera",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "dependencies": {
+        "apify": "^3.2.6",
+        "axios": "^1.5.0",
+        "cheerio": "^1.0.0-rc.12",
+        "zod": "^3.23.8"
+    },
+    "devDependencies": {
+        "@apify/eslint-config-ts": "^0.3.0",
+        "@apify/tsconfig": "^0.1.0",
+        "@typescript-eslint/eslint-plugin": "^7.18.0",
+        "@typescript-eslint/parser": "^7.18.0",
+        "eslint": "^8.50.0",
+        "tsx": "^4.6.2",
+        "typescript": "^5.3.3",
+        "vitest": "^2.1.6"
+    },
+    "scripts": {
+        "start": "npm run start:dev",
+        "start:prod": "node dist/main.js",
+        "start:dev": "tsx src/main.ts",
+        "build": "tsc",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage"
+    },
+    "author": "Doug Silkstone <doug@parsera.org>",
+    "license": "ISC"
+}
