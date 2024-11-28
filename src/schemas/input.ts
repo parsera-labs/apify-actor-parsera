@@ -1,5 +1,4 @@
 import { z } from "zod";
-import axios from "axios";
 import { PARSERA_API_BASE_URL } from "../config/constants.js";
 import { log } from "apify";
 
@@ -20,10 +19,14 @@ export const CookieSchema = z
  */
 export const getProxyCountriesSchema = async () => {
     try {
-        const response = await axios.get<Record<string, string>>(
-            `${PARSERA_API_BASE_URL}/proxy-countries`
-        );
-        const proxyCountries = Object.keys(response.data);
+        const response = await fetch(`${PARSERA_API_BASE_URL}/proxy-countries`);
+        if (!response.ok) {
+            throw new Error(
+                `Failed to fetch proxy countries: ${response.statusText}`
+            );
+        }
+        const data = (await response.json()) as Record<string, string>;
+        const proxyCountries = Object.keys(data);
         return z.enum(["random", ...proxyCountries] as [string, ...string[]]);
     } catch (error) {
         log.warning(

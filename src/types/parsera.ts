@@ -16,6 +16,8 @@ export interface BaseInput {
 export interface ParseraResponse {
     /** Array of extracted data objects */
     data: Record<string, string>[];
+    /** Message from the API */
+    message?: string;
 }
 
 export interface ParseraError {

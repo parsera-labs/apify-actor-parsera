@@ -1,12 +1,12 @@
 {
-	"actorSpecification": 1,
-	"name": "parsera",
-	"title": "Scrape single page in TypeScript",
-	"description": "Scrape data from single page with provided URL.",
-	"version": "0.0",
-	"meta": {
-		"templateId": "ts-start"
-	},
-	"input": "./input_schema.json",
-	"dockerfile": "./Dockerfile"
+    "actorSpecification": 1,
+    "name": "parsera",
+    "title": "Parsera Data Extractor",
+    "description": "Extract structured data from any webpage using AI-powered Parsera API",
+    "version": "1.0",
+    "buildTag": "latest",
+    "minMemoryMbytes": 256,
+    "maxMemoryMbytes": 4096,
+    "dockerfile": "./Dockerfile",
+    "input": "./input_schema.json"
 }
