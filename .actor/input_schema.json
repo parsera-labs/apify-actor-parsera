@@ -15,6 +15,14 @@
                 {
                     "description": "The main title of the page",
                     "name": "title"
+                },
+                {
+                    "description": "Number of points",
+                    "name": "points"
+                },
+                {
+                    "description": "Number of comments",
+                    "name": "nr_comments"
                 }
             ],
             "sectionCaption": "Extraction Settings",
@@ -308,6 +316,7 @@
         "url": {
             "description": "The webpage URL to extract data from",
             "editor": "textfield",
+            "prefill": "https://news.ycombinator.com/",
             "pattern": "^https?://[^\\s/$.?#].[^\\s]*$",
             "sectionCaption": "Basic Configuration",
             "sectionDescription": "Essential settings for data extraction",

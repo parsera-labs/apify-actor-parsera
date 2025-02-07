@@ -2,6 +2,35 @@
 
 Extract structured data from any website using [Parsera's](https://parsera.org) AI-powered data extraction API.
 
+## Example
+Input url you want to scrape in `Basic Configuration` > `Target URL`, and list columns to extract in `Extraction Settings` > `Extraction Attributes`.
+For example, you can extract list of articles from `https://news.ycombinator.com/` by putting this value into `Target URL` and filling `Extraction Attributes` with:
+```json
+[
+    {
+        "description": "The main title of the page",
+        "name": "title"
+    },
+    {
+        "description": "Number of points",
+        "name": "points"
+    },
+    {
+        "description": "Number of comments",
+        "name": "nr_comments"
+    }
+]
+```
+
+At end you'll get a table that looks like this:
+| nr_comments | points | title |
+|-------|------|----------|
+| 11 | 41 | The Inevitability of the Borrow Checker |
+| 1 | 19 | When Louis Armstrong Conquered Chicago |
+| 448 | 689 | Meta torrented & seeded 81.7 TB dataset containing copyrighted data |
+| ... | ... | ... |
+
+
 ## 🔑 Getting Started
 
 1. Get your Parsera API key at [parsera.org/apify](https://parsera.org/apify) (20 free credits)
