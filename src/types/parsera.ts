@@ -1,6 +1,5 @@
 export interface BaseInput {
     url: string;
-    apiKey: string;
     attributes: {
         name: string;
         description: string;
@@ -8,7 +7,7 @@ export interface BaseInput {
     proxyCountry?: string;
     cookies?: {
         [key: string]: string;
-        sameSite: "None" | "Lax" | "Strict";
+        sameSite: 'None' | 'Lax' | 'Strict';
     }[];
     precisionMode?: boolean;
 }
@@ -40,8 +39,8 @@ export interface ParseraRequestBody {
     /** Cookies to inject into the request */
     cookies?: {
         [key: string]: string;
-        sameSite: "None" | "Lax" | "Strict";
+        sameSite: 'None' | 'Lax' | 'Strict';
     }[];
     /** Extraction mode: "standard" or "precision" */
-    mode?: "standard" | "precision";
+    mode?: 'standard' | 'precision';
 }

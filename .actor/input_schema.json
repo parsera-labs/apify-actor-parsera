@@ -1,13 +1,6 @@
 {
     "description": "Configure the data extraction parameters for Parsera API",
     "properties": {
-        "apiKey": {
-            "description": "Your Parsera API key for authentication",
-            "editor": "textfield",
-            "isSecret": true,
-            "title": "Parsera API Key",
-            "type": "string"
-        },
         "attributes": {
             "description": "Define what data to extract from the webpage",
             "editor": "json",
@@ -324,7 +317,7 @@
             "type": "string"
         }
     },
-    "required": ["url", "apiKey", "attributes"],
+    "required": ["url", "attributes"],
     "schemaVersion": 1,
     "title": "Parsera Data Extractor Input",
     "type": "object"

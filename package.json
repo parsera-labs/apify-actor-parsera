@@ -14,6 +14,7 @@
     "devDependencies": {
         "@apify/eslint-config-ts": "^0.3.0",
         "@apify/tsconfig": "^0.1.0",
+        "@types/node": "^22.13.1",
         "@typescript-eslint/eslint-plugin": "^7.18.0",
         "@typescript-eslint/parser": "^7.18.0",
         "eslint": "^8.50.0",

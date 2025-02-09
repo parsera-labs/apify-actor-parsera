@@ -2,7 +2,7 @@ import {
     ParseraError,
     ParseraRequestBody,
     ParseraResponse,
-} from "../types/parsera.js";
+} from '../types/parsera.js';
 
 export interface ParseraRetryOptions {
     /**
@@ -52,7 +52,7 @@ export interface ParseraCookie {
      * SameSite attribute for the cookie
      * Controls how the cookie behaves with cross-site requests
      */
-    sameSite: "None" | "Lax" | "Strict";
+    sameSite: 'None' | 'Lax' | 'Strict';
 }
 
 export interface ParseraOptions {
@@ -135,15 +135,15 @@ export interface ExtractOptions {
 }
 
 export type ParseraEventType =
-    | "request:start"
-    | "request:end"
-    | "request:retry"
-    | "request:error"
-    | "extract:start"
-    | "extract:complete"
-    | "extract:error"
-    | "rateLimit"
-    | "timeout"
+    | 'request:start'
+    | 'request:end'
+    | 'request:retry'
+    | 'request:error'
+    | 'extract:start'
+    | 'extract:complete'
+    | 'extract:error'
+    | 'rateLimit'
+    | 'timeout'
     | string; // Allow custom event types
 
 export interface ParseraEvent<T = unknown> {
@@ -186,6 +186,7 @@ export class Parsera {
         ParseraEventType,
         Set<ParseraEventHandler<any>>
     >();
+
     private readonly eventOptions = new Map<
         ParseraEventType,
         ParseraEventOptions
@@ -197,7 +198,6 @@ export class Parsera {
      * @example
      * ```typescript
      * const parsera = new Parsera({
-     *     apiKey: "your-api-key",
      *     timeout: 60000, // 60 second timeout
      *     retryOptions: {
      *         maxRetries: 3,
@@ -209,8 +209,8 @@ export class Parsera {
      */
     constructor({
         apiKey,
-        baseUrl = "https://api.parsera.org/v1",
-        defaultProxyCountry = "US",
+        baseUrl = 'https://api.parsera.org/v1',
+        defaultProxyCountry = 'US',
         timeout = 30000,
         retryOptions = {},
     }: ParseraOptions) {
@@ -227,8 +227,8 @@ export class Parsera {
     }
 
     private validateApiKey(apiKey: string): void {
-        if (!apiKey || typeof apiKey !== "string" || apiKey.length < 32) {
-            throw new Error("Invalid API key format");
+        if (!apiKey || typeof apiKey !== 'string' || apiKey.length < 32) {
+            throw new Error('Invalid API key format');
         }
     }
 
@@ -236,7 +236,7 @@ export class Parsera {
         try {
             new URL(url);
         } catch {
-            throw new Error("Invalid URL format");
+            throw new Error('Invalid URL format');
         }
     }
 
@@ -245,11 +245,10 @@ export class Parsera {
         const timeSinceLastRequest = now - this.lastRequestTime;
 
         if (timeSinceLastRequest < this.minRequestInterval) {
-            await new Promise((resolve) =>
-                setTimeout(
-                    resolve,
-                    this.minRequestInterval - timeSinceLastRequest
-                )
+            await new Promise((resolve) => setTimeout(
+                resolve,
+                this.minRequestInterval - timeSinceLastRequest,
+            ),
             );
         }
         this.lastRequestTime = Date.now();
@@ -257,13 +256,13 @@ export class Parsera {
 
     private async fetchWithTimeout(
         url: string,
-        options: RequestInit & { timeout?: number }
+        options: RequestInit & { timeout?: number },
     ): Promise<Response> {
         const { timeout = this.timeout, ...fetchOptions } = options;
 
         const controller = new AbortController();
         if (options.signal) {
-            options.signal.addEventListener("abort", () => controller.abort());
+            options.signal.addEventListener('abort', () => controller.abort());
         }
 
         const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -281,22 +280,21 @@ export class Parsera {
 
     private async retryableRequest(
         requestFn: () => Promise<Response>,
-        retryCount = 0
+        retryCount = 0,
     ): Promise<Response> {
         try {
             await this.enforceRateLimit();
             const response = await requestFn();
 
             if (
-                response.status === 429 &&
-                retryCount < this.retryOptions.maxRetries
+                response.status === 429
+                && retryCount < this.retryOptions.maxRetries
             ) {
-                await this.emit("rateLimit", { retryCount });
-                await this.emit("request:retry", { retryCount });
+                await this.emit('rateLimit', { retryCount });
+                await this.emit('request:retry', { retryCount });
 
-                const delay =
-                    this.retryOptions.initialDelay *
-                    Math.pow(this.retryOptions.backoffFactor, retryCount);
+                const delay = this.retryOptions.initialDelay
+                    * this.retryOptions.backoffFactor ** retryCount;
                 await new Promise((resolve) => setTimeout(resolve, delay));
                 return this.retryableRequest(requestFn, retryCount + 1);
             }
@@ -304,19 +302,18 @@ export class Parsera {
             return response;
         } catch (error) {
             if (error instanceof Error) {
-                if (error.name === "AbortError") {
-                    await this.emit("timeout", undefined, error);
+                if (error.name === 'AbortError') {
+                    await this.emit('timeout', undefined, error);
                 }
-                await this.emit("request:error", undefined, error);
+                await this.emit('request:error', undefined, error);
 
                 if (
-                    retryCount < this.retryOptions.maxRetries &&
-                    this.isRetryableError(error)
+                    retryCount < this.retryOptions.maxRetries
+                    && this.isRetryableError(error)
                 ) {
-                    await this.emit("request:retry", { retryCount });
-                    const delay =
-                        this.retryOptions.initialDelay *
-                        Math.pow(this.retryOptions.backoffFactor, retryCount);
+                    await this.emit('request:retry', { retryCount });
+                    const delay = this.retryOptions.initialDelay
+                        * this.retryOptions.backoffFactor ** retryCount;
                     await new Promise((resolve) => setTimeout(resolve, delay));
                     return this.retryableRequest(requestFn, retryCount + 1);
                 }
@@ -327,10 +324,10 @@ export class Parsera {
 
     private isRetryableError(error: unknown): boolean {
         return (
-            error instanceof Error &&
-            (error.message.includes("network") ||
-                error.message.includes("timeout") ||
-                error.message.includes("ECONNRESET"))
+            error instanceof Error
+            && (error.message.includes('network')
+                || error.message.includes('timeout')
+                || error.message.includes('ECONNRESET'))
         );
     }
 
@@ -338,7 +335,7 @@ export class Parsera {
      * Converts a Record<string, string> to ParseraAttribute[]
      */
     private convertToAttributes(
-        attrs: Record<string, string>
+        attrs: Record<string, string>,
     ): ParseraAttribute[] {
         return Object.entries(attrs).map(([name, description]) => ({
             name,
@@ -372,7 +369,7 @@ export class Parsera {
     on<T = unknown>(
         eventType: ParseraEventType,
         handler: ParseraEventHandler<T>,
-        options: ParseraEventOptions = {}
+        options: ParseraEventOptions = {},
     ): void {
         if (!this.eventHandlers.has(eventType)) {
             this.eventHandlers.set(eventType, new Set());
@@ -391,7 +388,7 @@ export class Parsera {
      */
     off<T = unknown>(
         eventType: ParseraEventType,
-        handler: ParseraEventHandler<T>
+        handler: ParseraEventHandler<T>,
     ): void {
         const handlers = this.eventHandlers.get(eventType);
         if (handlers) {
@@ -414,7 +411,7 @@ export class Parsera {
         eventType: ParseraEventType,
         data?: T,
         error?: Error,
-        retryCount?: number
+        retryCount?: number,
     ): Promise<void> {
         const handlers = this.eventHandlers.get(eventType);
         if (!handlers?.size) return;
@@ -439,7 +436,7 @@ export class Parsera {
                 if (!options.catchErrors) {
                     throw error;
                 }
-                await this.emit("handler:error", undefined, error as Error);
+                await this.emit('handler:error', undefined, error as Error);
             }
         };
 
@@ -449,7 +446,7 @@ export class Parsera {
             });
         } else {
             await Promise.all(
-                Array.from(handlers).map((handler) => handleEvent(handler))
+                Array.from(handlers).map((handler) => handleEvent(handler)),
             );
         }
     }
@@ -525,7 +522,7 @@ export class Parsera {
         precisionMode,
         signal,
     }: ExtractOptions): Promise<Record<string, string>[]> {
-        await this.emit("extract:start", {
+        await this.emit('extract:start', {
             url,
             attributes,
             proxyCountry,
@@ -550,19 +547,18 @@ export class Parsera {
             }
 
             if (precisionMode) {
-                requestBody.mode = "precision";
+                requestBody.mode = 'precision';
             }
 
-            const response = await this.retryableRequest(() =>
-                this.fetchWithTimeout(`${this.baseUrl}/extract`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-API-KEY": this.apiKey,
-                    },
-                    body: JSON.stringify(requestBody),
-                    signal,
-                })
+            const response = await this.retryableRequest(() => this.fetchWithTimeout(`${this.baseUrl}/extract`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': this.apiKey,
+                },
+                body: JSON.stringify(requestBody),
+                signal,
+            }),
             );
 
             if (!response.ok) {
@@ -572,19 +568,19 @@ export class Parsera {
             const data = (await response.json()) as ParseraResponse;
             if (!data.data?.length) {
                 throw new Error(
-                    data.message ||
-                        "No data returned from Parsera API. Make sure the website contains the data and the attribute descriptions are clear."
+                    data.message
+                        || 'No data returned from Parsera API. Make sure the website contains the data and the attribute descriptions are clear.',
                 );
             }
 
-            await this.emit("extract:complete", data);
+            await this.emit('extract:complete', data);
             return data.data;
         } catch (error) {
             if (error instanceof Error) {
-                await this.emit("extract:error", undefined, error);
+                await this.emit('extract:error', undefined, error);
                 throw new Error(`Failed to extract data: ${error.message}`);
             }
-            throw new Error("Failed to extract data: Unknown error");
+            throw new Error('Failed to extract data: Unknown error');
         }
     }
 
@@ -623,25 +619,25 @@ export class Parsera {
     }
 
     private async handleError(response: Response): Promise<never> {
-        const status = response.status;
+        const { status } = response;
         const errorData = (await response.json()) as ParseraError;
 
         switch (status) {
             case 401:
                 throw new Error(
-                    "Invalid Parsera API key. Please check your credentials."
+                    'Invalid Parsera API key. Please check your credentials.',
                 );
             case 429:
-                throw new Error("Rate limit exceeded. Please try again later.");
+                throw new Error('Rate limit exceeded. Please try again later.');
             case 400:
                 throw new Error(
-                    `Bad request: ${errorData?.message || "Unknown error"}`
+                    `Bad request: ${errorData?.message || 'Unknown error'}`,
                 );
             default:
                 throw new Error(
                     `Parsera API error: ${
                         errorData?.message || response.statusText
-                    }`
+                    }`,
                 );
         }
     }

@@ -31,11 +31,6 @@ At end you'll get a table that looks like this:
 | ... | ... | ... |
 
 
-## 🔑 Getting Started
-
-1. Get your Parsera API key at [parsera.org/apify](https://parsera.org/apify) (20 free credits)
-2. Add your API key to the actor input
-
 ## 📝 Input Configuration
 
 The actor accepts the following input parameters:
@@ -43,7 +38,6 @@ The actor accepts the following input parameters:
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `url` | String | Yes | The target URL to extract data from |
-| `apiKey` | String | Yes | Your Parsera API key |
 | `attributes` | Array | Yes | List of data attributes to extract |
 | `proxyCountry` | String | No | Country for proxy IP (defaults to United States) |
 | `cookies` | Array | No | Cookies to inject into the request |
