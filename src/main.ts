@@ -9,7 +9,9 @@ try {
     const input = await validateInput(await Actor.getInput());
 
     const parsera = new Parsera({
-        apiKey: process.env.PARSERA_API_KEY,
+        apiKey: process.env.PARSERA_API_KEY ?? (() => {
+            throw new Error('PARSERA_API_KEY environment variable is not set');
+        })(),
         timeout: 60000,
         retryOptions: {
             maxRetries: 3,
