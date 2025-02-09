@@ -2,6 +2,9 @@ import { Actor, log } from 'apify';
 import { validateInput } from './utils/validation.js';
 import { ExtractOptions, Parsera } from './services/parsera.js';
 import type { ParseraResponse } from './types/parsera.js';
+import { ChargingManager } from './charging-manger.js';
+
+export type EventId = 'extract-default' | 'extract-precision'
 
 await Actor.init();
 
@@ -81,6 +84,15 @@ try {
             lastRunAt: new Date().toISOString(),
         });
     } finally {
+        if (input.precisionMode) {
+            const chargeResultPrecision = await ChargingManager.charge<EventId>('extract-precision', [{}]);
+            console.log('Charge result for extract-precision');
+            console.dir(chargeResultPrecision);
+        } else {
+            const chargeResultDefault = await ChargingManager.charge<EventId>('extract-default', [{}]);
+            console.log('Charge result for extract-default');
+            console.dir(chargeResultDefault);
+        }
         clearTimeout(timeout);
         parsera.removeAllListeners(); // Clean up event listeners
     }
