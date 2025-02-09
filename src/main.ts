@@ -12,7 +12,7 @@ try {
         apiKey: process.env.PARSERA_API_KEY ?? (() => {
             throw new Error('PARSERA_API_KEY environment variable is not set');
         })(),
-        timeout: 60000,
+        timeout: 600000,
         retryOptions: {
             maxRetries: 3,
             backoffFactor: 2,
@@ -72,7 +72,6 @@ try {
         const extractedData = await parsera.extract({
             ...input,
             signal: controller.signal,
-            precisionMode: false, // Default to false
         });
 
         await Actor.pushData(extractedData);
