@@ -6,7 +6,7 @@
             "editor": "json",
             "prefill": [
                 {
-                    "description": "The main title of the page",
+                    "description": "News title",
                     "name": "title"
                 },
                 {
@@ -15,7 +15,7 @@
                 },
                 {
                     "description": "Number of comments",
-                    "name": "nr_comments"
+                    "name": "comments"
                 }
             ],
             "sectionCaption": "Extraction Settings",
