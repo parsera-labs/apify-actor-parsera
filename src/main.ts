@@ -77,7 +77,7 @@ try {
             signal: controller.signal,
         });
 
-        if (extractedData?.length) {
+        if (!extractedData?.length) {
             await Actor.setStatusMessage('No data was found. Check website and attribute descriptions. If issue persists, contact us at contact@parsera.org.');
         }
         await Actor.pushData(extractedData);
