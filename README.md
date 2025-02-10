@@ -8,7 +8,7 @@ For example, you can extract list of articles from `https://news.ycombinator.com
 ```json
 [
     {
-        "description": "The main title of the page",
+        "description": "News title",
         "name": "title"
     },
     {
