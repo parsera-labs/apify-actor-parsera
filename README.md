@@ -1,3 +1,5 @@
+[![Website Content Crawler Actor](https://apify.com/actor-badge?actor=parsera-labs/parsera)](https://apify.com/parsera-labs/parsera?fpr=czveg)
+
 # Parsera Actor
 
 Extract structured data from any website using [Parsera's](https://parsera.org) AI-powered data extraction API.
