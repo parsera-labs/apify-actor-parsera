@@ -1,4 +1,4 @@
-[![Website Content Crawler Actor](https://apify.com/actor-badge?actor=parsera-labs/parsera)](https://apify.com/parsera-labs/parsera?fpr=czveg)
+[![Actor on Apify](https://apify.com/parsera-labs/parsera?fpr=czveg)](https://apify.com/parsera-labs/parsera?fpr=czveg)
 
 # Parsera Actor
 
