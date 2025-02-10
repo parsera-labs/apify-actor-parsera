@@ -566,12 +566,6 @@ export class Parsera {
             }
 
             const data = (await response.json()) as ParseraResponse;
-            if (!data.data?.length) {
-                throw new Error(
-                    data.message
-                        || 'No data returned from Parsera API. Make sure the website contains the data and the attribute descriptions are clear.',
-                );
-            }
 
             await this.emit('extract:complete', data);
             return data.data;

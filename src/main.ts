@@ -77,13 +77,11 @@ try {
             signal: controller.signal,
         });
 
+        if (extractedData?.length) {
+            await Actor.setStatusMessage('No data was found. Check website and attribute descriptions. If issue persists, contact us at contact@parsera.org.');
+        }
         await Actor.pushData(extractedData);
 
-        log.info('Actor finished successfully', {
-            extractedItemCount: extractedData.length,
-            lastRunAt: new Date().toISOString(),
-        });
-    } finally {
         if (input.precisionMode) {
             const chargeResultPrecision = await ChargingManager.charge<EventId>('extract-precision', [{}]);
             console.log('Charge result for extract-precision');
@@ -93,6 +91,12 @@ try {
             console.log('Charge result for extract-default');
             console.dir(chargeResultDefault);
         }
+
+        log.info('Actor finished successfully', {
+            extractedItemCount: extractedData.length,
+            lastRunAt: new Date().toISOString(),
+        });
+    } finally {
         clearTimeout(timeout);
         parsera.removeAllListeners(); // Clean up event listeners
     }
