@@ -1,4 +1,4 @@
-[![Actor on Apify](https://apify.com/parsera-labs/parsera?fpr=czveg)](https://apify.com/parsera-labs/parsera?fpr=czveg)
+<a href="https://apify.com/parsera-labs/parsera?fpr=czveg"><img src="https://apify.com/ext/run-on-apify.png" alt="Run Parsera Actor on Apify" width="126" height="28" /></a>
 
 # Parsera Actor
 
