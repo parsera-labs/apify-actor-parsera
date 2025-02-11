@@ -29,15 +29,6 @@
             "title": "Extraction Attributes",
             "type": "array"
         },
-        "cookies": {
-            "description": "Custom cookies to use for the request (optional)",
-            "editor": "json",
-            "nullable": true,
-            "sectionCaption": "Advanced Options",
-            "sectionDescription": "Optional settings for customizing the extraction process",
-            "title": "Custom Cookies",
-            "type": "array"
-        },
         "precisionMode": {
             "default": false,
             "description": "Enable for more accurate but more expensive extraction",
@@ -309,8 +300,17 @@
                 "Zambia"
             ],
             "nullable": true,
+            "sectionCaption": "Advanced Options",
+            "sectionDescription": "Optional settings for customizing the extraction process",
             "title": "Proxy Location",
             "type": "string"
+        },
+        "cookies": {
+            "description": "Custom cookies to use for the request (optional)",
+            "editor": "json",
+            "nullable": true,
+            "title": "Custom Cookies",
+            "type": "array"
         }
     },
     "required": ["url", "attributes"],
