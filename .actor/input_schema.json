@@ -26,8 +26,6 @@
                     "name": "comments"
                 }
             ],
-            "sectionCaption": "Extraction Settings",
-            "sectionDescription": "Configure what data to extract from the webpage",
             "title": "Extraction Attributes",
             "type": "array"
         },
@@ -35,6 +33,8 @@
             "description": "Custom cookies to use for the request (optional)",
             "editor": "json",
             "nullable": true,
+            "sectionCaption": "Advanced Options",
+            "sectionDescription": "Optional settings for customizing the extraction process",
             "title": "Custom Cookies",
             "type": "array"
         },
@@ -309,8 +309,6 @@
                 "Zambia"
             ],
             "nullable": true,
-            "sectionCaption": "Advanced Options",
-            "sectionDescription": "Optional settings for customizing the extraction process",
             "title": "Proxy Location",
             "type": "string"
         }
