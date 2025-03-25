@@ -3,6 +3,7 @@
 # Parsera Actor
 
 Extract structured data from any website using [Parsera's](https://parsera.org) AI-powered data extraction API.
+PS: Check out our AI Scraping Agents at Parsera.org! They extract data from URLs and HTML by generating scraping scripts and automatically adapting to changes on the data source side. 
 
 ## Example
 Input url you want to scrape in `Basic Configuration` > `Target URL`, and list columns to extract in `Extraction Settings` > `Extraction Attributes`.
