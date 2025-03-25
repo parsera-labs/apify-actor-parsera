@@ -77,12 +77,10 @@ try {
             signal: controller.signal,
         });
 
+        await Actor.pushData(extractedData);
         if (!extractedData?.length) {
             await Actor.setStatusMessage('No data was found. Check website and attribute descriptions. If issue persists, contact us at contact@parsera.org.');
-        }
-        await Actor.pushData(extractedData);
-
-        if (input.precisionMode) {
+        } else if (input.precisionMode) {
             const chargeResultPrecision = await ChargingManager.charge<EventId>('extract-precision', [{}]);
             console.log('Charge result for extract-precision');
             console.dir(chargeResultPrecision);
